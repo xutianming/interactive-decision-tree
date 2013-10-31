@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<link rel="stylesheet" href="styles.css">
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
 <?php
-//require_once.('json_util.php');
-/**
-if (isset($_GET['id']))
+require_once('json_util.php');
+require_once('Node.class.php');
+
+if (isset($_GET['name']))
 {
-	$id = $_GET['id'];
+	$name = $_GET['name'];
 }
 else
 {
 	echo '<p class="error">Sorry,no node was specified for removal.</p>';
 }
 
-if(isset($id))
+if(isset($name))
 {
-
+	$flag = deleteNode($name);
+	if(!$flag)
+	{
+		echo '<p class="error">Removal failed.</p>';
+	}
+	else
+	{
+		echo '<p>Removal succeed.</p>';
+	}
 }
-*/
+
 require_once('visual_control.php');
 ?>
 </body>

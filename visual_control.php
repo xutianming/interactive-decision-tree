@@ -16,7 +16,7 @@ var svg = d3.select("body").append("svg")
   .append("g")
     .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-d3.json("flare.json", function(error, root) {
+d3.json("test.json", function(error, root) {
   var nodes = tree.nodes(root),
       links = tree.links(nodes);
 
@@ -56,12 +56,13 @@ d3.json("flare.json", function(error, root) {
           });
         console.log(d);
         var id = d.name;
+        var size = d.size;
         d3.select('#addChildren')
-          .attr("href", function() { return "add.php?id=" + id; });
+          .attr("href", function() { return "add.php?name=" + id; });
         d3.select('#delChildren')
-          .attr("href", function() { return "delete.php?id=" + id; });
+          .attr("href", function() { return "delete.php?name=" + id; });
         d3.select('#updateNode')
-          .attr("href", function() { return "update.php?id=" + id; });
+          .attr("href", function() { return "update.php?name=" + id +"&size=" +size; });
       });
 
   node.append("text")
