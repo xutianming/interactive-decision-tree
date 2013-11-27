@@ -3,6 +3,19 @@
 <head>
 <meta charset="utf-8"/>
 <link rel="stylesheet" href="styles.css"/>
+<?php
+if(isset($_POST['submit']))
+{
+	$node_name = $_POST['inputname'];
+?>
+<style>
+#<?php echo $node_name;?> {
+	fill: #FF0000;
+}
+</style>
+<?php
+}
+?>
 </head>
 <body>
 <?php

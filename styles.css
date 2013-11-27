@@ -44,3 +44,50 @@
     margin-top: 0.3em; 
     padding-top: 0.3em;
 }
+
+/* JQuery slider */
+.slider { width: 180px; margin: 5px 0; }
+.ui-slider-range { 
+  background-color: #ccc;
+}
+
+
+#rel-slider { 
+  border-radius: 0px; 
+  border: 1px solid black; 
+  height: 8px; }
+
+#rel-slider a { 
+  border-radius: 1px; 
+  border: 1px solid black; 
+  width: 10px; 
+  height: 12px; 
+  background: #555; 
+  cursor: col-resize;
+}
+
+/*toggle button*/
+    
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-left, .ui-corner-br { 
+  border-bottom-right-radius: 1px; 
+  border-bottom-left-radius: 1px; 
+  border-top-right-radius: 1px; 
+  border-top-left-radius: 1px;
+}
+
+.ui-widget {
+  font-family: arial; 
+  font-size: 1em;
+}
+
+.ui-state-default, .ui-state-active { 
+  border-color: #555;
+}
+
+.ui-state-default { 
+  color: #777;
+}
+
+.ui-state-active { 
+  color: #333;
+}
