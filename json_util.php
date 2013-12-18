@@ -1,14 +1,21 @@
 <?php
 
 require_once("Node.class.php");
-define("DATAFILE", "test.json");
 define("TMPFILE","tmp.json");
 
 
 // 删除不符合条件的节点，把剩余节点输出到tmp文件中
 function filterNode()
 {
-	$json_str = file_get_contents(DATAFILE);
+	if(!isset($_COOKIE['data_file']))
+	{
+		$data_file = "test.json";
+	}
+	else
+	{
+		$data_file = $_COOKIE['data_file'];
+	}
+	$json_str = file_get_contents($data_file);
 	$json_obj = json_decode($json_str);
 	$node_queue = array();
 	array_push($node_queue,&$json_obj);
@@ -52,7 +59,15 @@ function filterNode()
 
 function deleteNode($name)
 {
-	$json_str = file_get_contents(DATAFILE);
+	if(!isset($_COOKIE['data_file']))
+	{
+		$data_file = "test.json";
+	}
+	else
+	{
+		$data_file = $_COOKIE['data_file'];
+	}
+	$json_str = file_get_contents($data_file);
 	$json_obj = json_decode($json_str);
 	$node_queue = array();
 	array_push($node_queue, &$json_obj);
@@ -60,7 +75,7 @@ function deleteNode($name)
 	{
 		unset($json_obj);
 		$json_str_new = json_encode($json_obj);
-		file_put_contents(DATAFILE, $json_str_new);
+		file_put_contents($data_file, $json_str_new);
 		return true;
 	}
 	while(count($node_queue) > 0)
@@ -73,7 +88,7 @@ function deleteNode($name)
 				{
 					array_splice($node_queue[0]->children,$i,1);
 					$json_str_new = json_encode($json_obj);
-					file_put_contents(DATAFILE, $json_str_new);
+					file_put_contents($data_file, $json_str_new);
 					return true;
 				}
 				if(count($node_queue[0]->children[$i]->children)>0)
@@ -89,10 +104,19 @@ function deleteNode($name)
 
 function updateNode($origin_name,$node)
 {
+	if(!isset($_COOKIE['data_file']))
+	{
+		$data_file = "test.json";
+	}
+	else
+	{
+		$data_file = $_COOKIE['data_file'];
+	}
+
 	$name = $node->getName();
 	$size = $node->getSize();
 
-	$json_str = file_get_contents(DATAFILE);
+	$json_str = file_get_contents($data_file);
 	$json_obj = json_decode($json_str);
 	$node_queue = array();
 	array_push($node_queue, &$json_obj);
@@ -101,7 +125,7 @@ function updateNode($origin_name,$node)
 		$json_obj->name = $name;
 		$json_obj->size = $size;
 		$json_str_new = json_encode($json_obj);
-		file_put_contents(DATAFILE, $json_str_new);
+		file_put_contents($data_file, $json_str_new);
 		return true;
 	}
 	while(count($node_queue) > 0)
@@ -115,7 +139,7 @@ function updateNode($origin_name,$node)
 					$node_queue[0]->children[$i]->name = $name;
 					$node_queue[0]->children[$i]->size = $size;
 					$json_str_new = json_encode($json_obj);
-					file_put_contents(DATAFILE, $json_str_new);
+					file_put_contents($data_file, $json_str_new);
 					return true;
 				}
 				if(count($node_queue[0]->children[$i]->children)>0)
@@ -131,6 +155,15 @@ function updateNode($origin_name,$node)
 
 function insertAndDump(&$children, &$obj, &$json_obj)
 {
+	if(!isset($_COOKIE['data_file']))
+	{
+		$data_file = "test.json";
+	}
+	else
+	{
+		$data_file = $_COOKIE['data_file'];
+	}
+
 	if(count($children) <= 0)
 	{
 		$children = array();			
@@ -141,15 +174,25 @@ function insertAndDump(&$children, &$obj, &$json_obj)
 		array_push($children,$obj);
 	}
 	$json_str_new = json_encode($json_obj);
-	file_put_contents(DATAFILE, $json_str_new);
+	file_put_contents($data_file, $json_str_new);
 }
 
 function insertNode($parent,$node)
 {
+	if(!isset($_COOKIE['data_file']))
+	{
+		$data_file = "test.json";
+	}
+	else
+	{
+		$data_file = $_COOKIE['data_file'];
+	}
+	echo $data_file;
+
 	$obj->name = $node->getName();
 	$obj->size = $node->getSize();
 
-	$json_str = file_get_contents(DATAFILE);
+	$json_str = file_get_contents($data_file);
 	$json_obj = json_decode($json_str);
 	$node_queue = array();
 	array_push($node_queue, &$json_obj);
@@ -178,5 +221,8 @@ function insertNode($parent,$node)
 		array_shift($node_queue);
 	}
 	return false;
-}
+ }
+
+ function validateJson()
+ {}
 ?>

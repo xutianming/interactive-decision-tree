@@ -52,12 +52,12 @@
 }
 
 
-#rel-slider { 
+#size-slider { 
   border-radius: 0px; 
   border: 1px solid black; 
   height: 8px; }
 
-#rel-slider a { 
+#size-slider a { 
   border-radius: 1px; 
   border: 1px solid black; 
   width: 10px; 
@@ -90,4 +90,29 @@
 
 .ui-state-active { 
   color: #333;
+}
+
+/* control panel */
+
+#control-panel {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+/* data table */
+#datatable {
+  position: absolute;
+  top: 20px;
+  left: 700px;
+}
+
+#datatable table {
+  border-collapse: collapse;
+  border: none;
+  width: 100px;
+}
+
+#datatable td,th {
+  border: solid #777 1px;
 }

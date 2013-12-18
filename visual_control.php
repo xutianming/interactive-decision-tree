@@ -5,6 +5,15 @@ if(!isset($data_file))
   $data_file = "test.json";
 }
 
+if(!isset($_COOKIE['data_file']))
+{
+  $data_file = "test.json";
+}
+else
+{
+  $data_file = $_COOKIE['data_file'];
+}
+
 if(!file_exists($data_file))
 {
   echo "Data file does not exist.\n";
@@ -12,14 +21,15 @@ if(!file_exists($data_file))
 
 ?>
 <script src="js/d3.v3.js"></script>
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script>
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/jquery-ui.js"></script>
+<script type="text/javascript" src="js/jquery-migrate-1.0.0.js"></script>
 <script>
 // JQuery init slider
-var cutoff = 5000;
+var cutoff = 1;
+var exchange_flag = false;
 $(function(cutoff) {
-$("#size-slider").slider({max: 20000, min: 1, value: 5000, range: "max",
+$("#size-slider").slider({max: 20000, min: 1, value: 1, range: "max",
     slide: function(event, ui) {
         $("svg").remove();
         cutoff = ui.value;
@@ -28,8 +38,42 @@ $("#size-slider").slider({max: 20000, min: 1, value: 5000, range: "max",
     }});
 });
 
+var node_selected = 0;
+var node1 = null;
+var node2 = null;
+$(function() {
+  $("#exchangeBtn").click(
+    function() {
+      $("circle").attr("r",6.5)
+          .click( 
+            function() {
+              node_selected = node_selected + 1;
+              if(node_selected == 1)
+              {
+                node1 = event.target.id;
+                //console.log(node1);
+              }
+              if(node_selected == 2)
+              {
+                node2 = event.target.id;
+                //console.log(node2);
+                var xmlhttp = new XMLHttpRequest();
+                //xmlhttp.open("GET","replace.php?node1="+node1+"&node2="+node2,true);
+                xmlhttp.open("GET","delete.php?name="+node1,false);
+                xmlhttp.send();
+                $("circle").attr("r",4.5);
+                draw_tree(cutoff);
+                window.location.reload();
+              }
+          });;
+    }
+    )
+});
+
+
 // D3js draw tree
 draw_tree(cutoff);
+
 function draw_tree(cutoff)
 {
   var diameter = 960;
@@ -66,6 +110,7 @@ function draw_tree(cutoff)
 
     node.append("circle")
       .attr("r", 4.5)
+      .attr("id",function(d) { return d.name;})
       .on("contextmenu",function(d,index) {
         if (d3.event.pageX || d3.event.pageY) {
             var x = d3.event.pageX;
@@ -94,6 +139,8 @@ function draw_tree(cutoff)
           .attr("href", function() { return "delete.php?name=" + id; });
         d3.select('#updateNode')
           .attr("href", function() { return "update.php?name=" + id +"&size=" +size; });
+        d3.select('#showSubVis')
+          .attr("href", function() { return "details.php?name=" + id; });
       });
 
     node.append("text")
@@ -101,12 +148,53 @@ function draw_tree(cutoff)
       .attr("dy", ".31em")
       .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
       .attr("transform", function(d) { return d.x < 180 ? "translate(8)" : "rotate(180)translate(-8)"; })
-      .text(function(d) { return d.name; });
+      .text(function(d) { return d.name; })
+      .on("mouseover",show_defination)
+      .on("click",text_click);
   });
 
   d3.select(self.frameElement).style("height", diameter - 150 + "px");
 }
 
+// Show defination of the current item
+function show_defination(d) {
+    d3.select(this)
+        .append("svg:title")
+        .text(function(d) {return "size:" + d.size;})
+        .attr("x",function(d) {return d.x+10;})
+        .attr("y",function(d) {return d.y+10;})
+}
+
+// Text clicked , show the sorted children
+function text_click(d) {
+  d3.select("#datatable table").remove();
+  var rows = [];
+  d.children.forEach(function(child) {
+    rows.push(child);
+  });
+  rows.sort(sortSize);
+  var table = d3.select("#datatable").append("table"),
+      thead = table.append("thead"),
+      tbody = table.append("tbody");
+  thead.append("th").text("Name");
+  thead.append("th").text("Size");
+  var tr = tbody.selectAll("tr")
+      .data(rows)
+      .enter()
+      .append("tr");
+  var td =  tr.selectAll("td")
+      .data(function(d) { return [d.name, d.size]; })
+      .enter().append("td")
+      .text(function(d) { return d; });
+}
+
+// sort func to sort by size for array.sort
+function sortSize(a,b)
+{
+  return a.size - b.size;
+}
+
+// Function to decide which node should be displayed
 function filter(root,cutoff)
 {
   var queue = [];
@@ -145,18 +233,23 @@ function filter(root,cutoff)
   <input type="submit" name="submit" value="Submit"/>
 </form>
 -->
-<div>
-Size cut off:<span id="size-val">5000</span>
+<div id="control-panel">
+Size cut off:<span id="size-val">1</span>
 <div id="size-slider" class="slider">
 </div>
+<div id="datatable"></div>
 <div id="divContext"
- style="border: 1px solid blue; display: none;">
+ style="border: 1px solid blue; display: none;width:150px;">
     <ul class="cmenu">
         <li><a id="addChildren">增加分支</a></li>
         <li><a id="delChildren">删除分支</a></li>
         <li><a id="updateNode">修改节点</a></li>
+        <li><a id="showSubVis">显示子图</a></li>
         <li class="topSep">
             <a id="aDisable" href="#">disable this menu</a>
         </li>
     </ul>
+</div>
+<div id = "node-exchange">
+  <button type="button" id="exchangeBtn">交换节点</button>
 </div>
