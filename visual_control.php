@@ -51,19 +51,18 @@ $(function() {
               if(node_selected == 1)
               {
                 node1 = event.target.id;
-                //console.log(node1);
               }
               if(node_selected == 2)
               {
                 node2 = event.target.id;
-                //console.log(node2);
                 var xmlhttp = new XMLHttpRequest();
-                //xmlhttp.open("GET","replace.php?node1="+node1+"&node2="+node2,true);
-                xmlhttp.open("GET","delete.php?name="+node1,false);
+                xmlhttp.open("GET","swap.php?node1="+node1+"&node2="+node2,true);
+                //xmlhttp.open("GET","delete.php?name="+node1,false);
                 xmlhttp.send();
                 $("circle").attr("r",4.5);
+                $("svg").remove();
                 draw_tree(cutoff);
-                window.location.reload();
+                node_selected = 0;
               }
           });;
     }
@@ -160,7 +159,12 @@ function draw_tree(cutoff)
 function show_defination(d) {
     d3.select(this)
         .append("svg:title")
-        .text(function(d) {return "size:" + d.size;})
+        .text(function(d) {
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET","query.php?name="+d.name,false);
+            xmlhttp.send();
+            return xmlhttp.responseText;
+          })
         .attr("x",function(d) {return d.x+10;})
         .attr("y",function(d) {return d.y+10;})
 }
@@ -252,4 +256,5 @@ Size cut off:<span id="size-val">1</span>
 </div>
 <div id = "node-exchange">
   <button type="button" id="exchangeBtn">交换节点</button>
+</div>
 </div>

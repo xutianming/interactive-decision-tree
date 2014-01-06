@@ -8,7 +8,11 @@ if (($_FILES["file"]["type"] == "application/json")
     }
     else
     {
-      setcookie('data_file',''.$_FILES["file"]["name"],time()+3600);
+      require_once('json_util.php');
+      $flag = validateJson($_FILES["file"]["tmp_name"]);
+      if($flag)
+      {
+        setcookie('data_file',''.$_FILES["file"]["name"],time()+3600);
 ?>
 <!DOCTYPE html>
 <html>
@@ -20,29 +24,30 @@ if (($_FILES["file"]["type"] == "application/json")
 </head>
 <body>
 <?php
-      echo "Upload: " . $_FILES["file"]["name"] . "<br />";
-      echo "Type: " . $_FILES["file"]["type"] . "<br />";
-      echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
-      echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
-
-      if(file_exists($_FILES["file"]["name"]))
-      {
-        echo $_FILES["file"]["name"] . " already exists. ";
-      }
-      else
-      {
-        move_uploaded_file($_FILES["file"]["tmp_name"],$_FILES["file"]["name"]);
-        echo "Stored in: " . $_FILES["file"]["name"];
+        echo "Upload: " . $_FILES["file"]["name"] . "    ";
+      //echo "Type: " . $_FILES["file"]["type"] . "<br />";
+      //echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
+      //echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
+      
+      
+        if(file_exists($_FILES["file"]["name"]))
+        {
+          echo $_FILES["file"]["name"] . " already exists. ";
+        }
+        else
+        {
+          move_uploaded_file($_FILES["file"]["tmp_name"],$_FILES["file"]["name"]);
+          //echo "Stored in: " . $_FILES["file"]["name"];
+        }
+        require_once('visual_control.php');
       }
     }
+    
 }
 else
 {
     echo "Invalid file";
 }
-echo "_________________________".$_COOKIE['data_file'];
-require_once('json_util.php');
-require_once('visual_control.php');
 ?>
 </body>
 </html>

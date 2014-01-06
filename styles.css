@@ -1,3 +1,4 @@
+/* D3 graph*/
 .node circle {
   fill: #fff;
   stroke: steelblue;
@@ -14,6 +15,7 @@
   stroke-width: 1.5px;
 }
 
+/* context menu */
 .cmenu {
 	margin: 0; 
 	padding: 0.3em; 
@@ -91,15 +93,15 @@
 .ui-state-active { 
   color: #333;
 }
-
+/* page frame */
 /* control panel */
 
 #control-panel {
   position: absolute;
-  top: 10px;
+  top: 60px;
   left: 10px;
+  height: 50px;
 }
-
 /* data table */
 #datatable {
   position: absolute;
@@ -115,4 +117,16 @@
 
 #datatable td,th {
   border: solid #777 1px;
+}
+
+.info {
+  position: absolute;
+  top :20px;
+  left: 10px;
+}
+
+.uploader {
+  position: absolute;
+  top: 120px;
+  left: 10px;
 }
