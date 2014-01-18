@@ -1,7 +1,7 @@
 <?php
-require_once('admin/login.php');
-if(!empty($_COOKIE['user_id']))
-{
+//require_once('admin/login.php');
+//if(!empty($_COOKIE['user_id']))
+//{
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,6 +39,7 @@ if (!isset($_POST['submit']))
 ?>
 <script>
 // bind event to addAttrBtn
+/**
 $(function()
 {
 var xmlhttp = new XMLHttpRequest();
@@ -46,6 +47,7 @@ xmlhttp.open("GET","query.php?name=<?php echo $name;?>",false);
 xmlhttp.send();
 console.log(xmlhttp.responseText);
 var response_str = parseResponse2DataForm(xmlhttp.responseText);
+*/
 /**
 parseResponse2DataForm要把ajax响应转化为
 var response_str = '<label for="attributename1">Attribute Name:</label></br>' + 
@@ -54,6 +56,7 @@ var response_str = '<label for="attributename1">Attribute Name:</label></br>' +
 		  		   '<input id="attributevalue1" name="attributevalue1" type="text" size="30" value="val1"/></br>'+
 		  		   '<input id="optionalattributenum" name="optionalattributenum" style="display:none;" value="1"/>';
 */
+/**
 var dataform = $('#dataform');
 $(response_str).appendTo(dataform);
 var i = $('#optionalattributenum').attr('value')+1;
@@ -69,6 +72,7 @@ $('#addAttrBtn').click(
 		i++;
 	});
 });
+*/
 </script>
 <?php
 if(isset($_POST['submit']))
@@ -126,5 +130,5 @@ if($output_form)
 </body>
 </html>
 <?php
-}
+//}
 ?>

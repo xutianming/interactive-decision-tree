@@ -13,6 +13,6 @@ function parseResponse2DataForm(response)
 		  		   '<label for="attributevalue'+cnt+'">Attribute Value:</label></br>'+
 		  		   '<input id="attributevalue'+cnt+'" name="attributevalue'+cnt+'" type="text" size="30" value="'+json_obj[key]+'"/></br>';
 	}
-	response_str += '<input id="optionalattributenum" name="optionalattributenum" style="display:none;" value="'+cnt+'"/>';
+	response_str += '<input id="update-optionalattributenum" name="optionalattributenum" style="display:none;" value="'+cnt+'"/>';
 	return response_str;
 }

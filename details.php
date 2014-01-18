@@ -36,9 +36,9 @@ name = <?php echo "\"$name\"";?>;
 
 console.log(name);
 
-var margin = {top: 20, right: 120, bottom: 20, left: 120},
+var margin = {top: 30, right: 10, bottom: 100, left: 600},
     width = 960 - margin.right - margin.left,
-    height = 800 - margin.top - margin.bottom;
+    height = 700 - margin.top - margin.bottom;
     
 var i = 0,
     duration = 750,
@@ -50,7 +50,7 @@ var tree = d3.layout.tree()
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.y, d.x]; });
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#sub-graph").append("svg")
     .attr("width", width + margin.right + margin.left)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")

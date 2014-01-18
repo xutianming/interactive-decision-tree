@@ -1,7 +1,7 @@
 <?php
-require_once('admin/login.php');
-if(!empty($_COOKIE['user_id']))
-{
+//require_once('admin/login.php');
+//if(!empty($_COOKIE['user_id']))
+//{
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,10 +38,10 @@ if(isset($name))
 	}
 }
 
-require_once('visual_control.php');
+//require_once('visual_control.php');
 ?>
 </body>
 </html>
 <?php
-}
+//}
 ?>

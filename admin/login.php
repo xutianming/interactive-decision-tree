@@ -62,7 +62,7 @@ value="<?php if (!empty($username)) echo $username; ?>" /><br /> <label for="pas
 else
 {
 	//$logout_url = "http://" . $_SERVER['HTTP_HOST'] . "/interactive-decision-tree/admin/logout.php";
-	echo('<p class="login">You are logged in as ' . $_COOKIE['username'] . '(<a href="logout.php">Logout</a>).</p>');
+	//echo('<p class="login">You are logged in as ' . $_COOKIE['username'] . '(<a href="logout.php">Logout</a>).</p>');
 }
 ?>
 </body>

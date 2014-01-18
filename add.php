@@ -1,7 +1,7 @@
 <?php
-require_once('admin/login.php');
-if(!empty($_COOKIE['user_id']))
-{
+//require_once('admin/login.php');
+//if(!empty($_COOKIE['user_id']))
+//{
 ?>
 <!DOCTYPE html>
 <html>
@@ -29,6 +29,7 @@ if(isset($_POST['submit']))
 <script>
 
 // bind event to addAttrBtn
+/**
 $(function()
 {
 var i = 1;
@@ -44,6 +45,7 @@ $('#addAttrBtn').click(
 		i++;
 	});
 });
+*/
 </script>
 <?php
 require_once("json_util.php");
@@ -58,7 +60,7 @@ if (!isset($_POST['submit']))
 	}
 	else
 	{
-		echo '<p class="info">Sorry,no node was specified to add children.</p>';
+		//echo '<p class="info">Sorry,no node was specified to add children.</p>';
 	}
 
 	if(isset($name))
@@ -74,7 +76,7 @@ if(isset($_POST['submit']))
 	$node_parent = $_POST['inputparent'];
 	if(empty($node_name) || empty($node_size))
 	{
-		echo '<p class="info">Both 2 fields should be filled.</p>';
+		//echo '<p class="info">Both 2 fields should be filled.</p>';
 		$output_form = true;
 	}
 	else
@@ -91,18 +93,19 @@ if(isset($_POST['submit']))
 		$flag = insertNode($node_parent,$node);
 		if($flag)
 		{
-			echo '<p class="info">Add node succeed.</p>';
+			//echo '<p class="info">Add node succeed.</p>';
 			require_once("visual_control.php");
 		}
 		else
 		{
-			echo '<p class="info">Add node failed.</p>';
+			//echo '<p class="info">Add node failed.</p>';
 		}
 	}
 }
 if($output_form)
 {
 ?>
+<!--
 <h2>Please enter the information of the child node.</h2>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];?>">
 <div id = "dataform">
@@ -117,11 +120,12 @@ if($output_form)
 <input type="submit" name="submit" value="Submit"/>
 </form>
 <button type="button" id="addAttrBtn">增加属性</button>
+-->
 <?php
 }
 ?>
 </body>
 </html>
 <?php
-}
+//}
 ?>
